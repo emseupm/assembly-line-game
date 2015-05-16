@@ -3,6 +3,7 @@ package es.upm.fi.emse;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AssemblyLine extends Component {
@@ -11,7 +12,27 @@ public class AssemblyLine extends Component {
 
 	protected List<Station> stations;
 	protected List<RecipeLoader> recipeLoaders;
-
+	protected int totalStations;
+	
+	public AssemblyLine(){
+		
+		stations = new ArrayList<Station>();
+		totalStations = 5;
+		
+		setupStations();
+	}
+	
+	private void setupStations(){
+		for(int i=0; i<totalStations; i++){
+			Station station = new Station();
+			
+			station.setBounds(0,30,100,100);
+			stations.add(station);
+			
+			System.out.println(i);
+		}
+	}
+	
 	public void paint(Graphics g) {
 		g.setColor(Color.BLUE);
 
