@@ -4,16 +4,15 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Warehouse extends Component {
 
-	private static int INVENTORY_SIZE = 3;
+	private static int WAREHOUSE_SIZE = 3;
 	private static final long serialVersionUID = -4985756162707607745L;
-	private ArrayList<Part>  myInventory;
+	private ArrayList<Part>  myWarehouse;
 	
 	public Warehouse(){		
-		this.myInventory = fillInventory();
+		this.myWarehouse = fillWarehouse();
 	}
 
 	public void paint(Graphics g) {
@@ -23,26 +22,26 @@ public class Warehouse extends Component {
 		g.drawRect(padding, padding, getWidth() - (padding * 2), getHeight() - (padding * 2));
 		g.drawString("WAREHOUSE", padding * 2, padding * 2);
 		
-		paintPartsInInventory(g);
+		paintPartsInWarehouse(g);
 	}
 	
-	private void paintPartsInInventory(Graphics g){
-		// Paint all Parts stored in my inventory aligned horizontally
+	private void paintPartsInWarehouse(Graphics g){
+		// Paint all Parts stored in my warehouse aligned horizontally
 		int x = 0;
 		int y = 0;
-		for (Part p : myInventory){
+		for (Part p : myWarehouse){
 		//	p.paint(x,y);
 			x = x + 10;
 		}	
 	}
 
-	private ArrayList<Part> fillInventory(){
+	private ArrayList<Part> fillWarehouse(){
 		
-		ArrayList<Part> myInv;
-		myInv = new ArrayList<Part>();
-		for (int i = 0; i<INVENTORY_SIZE;i++){
-		//	myInv.add(Part.generateRandomPart());
+		ArrayList<Part> myW;
+		myW = new ArrayList<Part>();
+		for (int i = 0; i<WAREHOUSE_SIZE;i++){
+		//	myW.add(Part.generateRandomPart());
 		}
-		return myInv;
+		return myW;
 	}
 }
