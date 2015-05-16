@@ -23,10 +23,10 @@ public class Station extends Component{
 		
 		g.setColor(Color.GREEN);
 		
-		int borderX = getX()+10;
-		int borderY = getY()+10;
+		int borderX = getX() + 10;
+		int borderY = getY() + 40;
 		
-		System.out.println(borderX+"-"+ borderY+"-"+getWidth()+"-"+getHeight());
+		System.out.println(borderX + "-" + borderY + "-" + getWidth() + "-" + getHeight());
 		
 		g.drawRect(borderX, borderY, getWidth(), getHeight());
 		g.drawString("STATION", borderX, borderY);
