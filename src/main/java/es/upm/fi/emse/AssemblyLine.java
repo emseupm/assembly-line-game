@@ -14,30 +14,34 @@ public class AssemblyLine extends Component {
 	protected List<RecipeLoader> recipeLoaders;
 	protected int totalStations;
 	
+	
 	public AssemblyLine(){
-		
 		stations = new ArrayList<Station>();
 		totalStations = 5;
-		
-		setupStations();
 	}
 	
-	private void setupStations(){
+	public void setupStations(){
+		int padding = 10;
+		int stationWidth = getWidth() / totalStations;
 		for(int i=0; i<totalStations; i++){
 			Station station = new Station();
-			
-			station.setBounds(0,30,100,100);
+			int borderX = getX()+padding;
+			int borderY = getY()+padding;
+			station.setBounds(borderX+(i*stationWidth),borderY,stationWidth,getHeight());
 			stations.add(station);
-			
-			System.out.println(i);
 		}
 	}
 	
 	public void paint(Graphics g) {
+		setupStations();
+		
 		g.setColor(Color.BLUE);
-
 		int padding = 10;
 		g.drawRect(padding, padding, getWidth() - (padding * 2), getHeight() - (padding * 2));
 		g.drawString("ASSEMBLY LINE", padding * 2, padding * 2);
+		
+		for(int i=0; i<stations.size(); i++){
+			stations.get(i).paint(g);
+		}
 	}
 }
