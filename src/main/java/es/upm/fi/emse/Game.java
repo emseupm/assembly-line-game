@@ -1,5 +1,6 @@
 package es.upm.fi.emse;
 
+import java.awt.Color;
 import java.awt.Frame;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -24,6 +25,7 @@ public class Game extends Frame {
 		this.recipes = recipes;
 
 		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+		setBackground(Color.WHITE);
 
 		setupComponents();
 	}
