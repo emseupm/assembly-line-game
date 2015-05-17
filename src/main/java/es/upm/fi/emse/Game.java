@@ -33,23 +33,24 @@ public class Game extends Frame {
 		add(assemblyLine);
 		add(warehouse);
 
-		final int x = 0;
-		final int y = 30; // guessing title bar height
-		final int width = getWidth() - x;
-		final int height = getHeight() - y;
+		layoutComponents();
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				layoutComponents();
+			}
+		});
+	}
+
+	private void layoutComponents() {
+		int x = 0;
+		int y = 30; // guessing title bar height
+		int width = getWidth() - x;
+		int height = getHeight() - y;
 
 		score.setBounds(x, y, width, height / 3);
 		assemblyLine.setBounds(x, y + height / 3, width, height / 3);
 		warehouse.setBounds(0, y + 2 * height / 3, width, height / 3);
-
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				score.setBounds(x, y, width, height / 3);
-				assemblyLine.setBounds(x, y + height / 3, width, height / 3);
-				warehouse.setBounds(0, y + 2 * height / 3, width, height / 3);
-			}
-		});
 	}
 
 	public void start() {
