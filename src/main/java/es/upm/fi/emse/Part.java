@@ -21,7 +21,7 @@ public class Part extends Component {
 		
 	}
 	
-	public Part generateRandomTyePart(){
+	public static Part generateRandomTyePart(){
 				
 		Part p = null;		
 		int i = randInt(0,numPartTypes-1);			

@@ -7,14 +7,17 @@ import java.util.ArrayList;
 
 public class Warehouse extends Component {
 
-	private static int WAREHOUSE_SIZE = 3;
+	private static int WAREHOUSE_SIZE = 4;
 	private static final long serialVersionUID = -4985756162707607745L;
 	private ArrayList<Part>  myWarehouse;
+	protected int padding = 25;
 	
 	public Warehouse(){		
 		this.myWarehouse = fillWarehouse();
+		//this.myWarehouse = fillWarehouseRandomly();
 	}
 
+	// Paint the Warehouse box
 	public void paint(Graphics g) {
 		g.setColor(Color.BLUE);
 
@@ -25,23 +28,40 @@ public class Warehouse extends Component {
 		paintPartsInWarehouse(g);
 	}
 	
+	// Paint all Parts stored in my warehouse aligned horizontally
 	private void paintPartsInWarehouse(Graphics g){
-		// Paint all Parts stored in my warehouse aligned horizontally
-		int x = 0;
-		int y = 0;
-		for (Part p : myWarehouse){
-		//	p.paint(x,y);
-			x = x + 10;
+		
+		int i = 0;
+		int partWidth = (getWidth() - padding * 2) / WAREHOUSE_SIZE;
+		for (Part p : myWarehouse){		
+			p.setBounds(padding + i * (partWidth), padding, partWidth, getHeight() - padding * 2);
+			p.paint(g);
+			i++;
 		}	
 	}
 
+	// Fills warehouse with Random Parts
+	private ArrayList<Part> fillWarehouseRandomly(){
+		
+		ArrayList<Part> myW = new ArrayList<Part>();
+		
+		for (int i = 0; i<WAREHOUSE_SIZE;i++){
+			myW.add(Part.generateRandomTyePart());
+		}
+
+		return myW;
+	}
+	
+	// Fills Warehouse with selected Parts
 	private ArrayList<Part> fillWarehouse(){
 		
-		ArrayList<Part> myW;
-		myW = new ArrayList<Part>();
-		for (int i = 0; i<WAREHOUSE_SIZE;i++){
-		//	myW.add(Part.generateRandomPart());
-		}
+		ArrayList<Part> myW = new ArrayList<Part>();
+
+		myW.add(new Lettuce());
+		myW.add(new Meatball());
+		myW.add(new Cookie());
+		myW.add(new Coffee());
+		
 		return myW;
 	}
 }
