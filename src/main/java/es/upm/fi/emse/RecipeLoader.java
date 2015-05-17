@@ -4,6 +4,6 @@ public class RecipeLoader {
 	protected Station station;
 
 	public void load(Recipe recipe) {
-
+		station.addTaskArray(recipe.getTasks());
 	}
 }
