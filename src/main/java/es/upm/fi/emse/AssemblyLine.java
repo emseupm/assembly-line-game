@@ -17,12 +17,12 @@ public class AssemblyLine extends Component {
 	protected List<RecipeLoader> recipeLoaders;
 	protected int totalStations = 3;
 	protected int padding = 10;
-	
+
 	public AssemblyLine() {
 		stations = new ArrayList<Station>();
 		setupStations();
 	}
-	
+
 	private void setupStations() {
 		for (int i = 0; i < totalStations; i++) {
 			Station station = new Station();

@@ -1,6 +1,6 @@
 package es.upm.fi.emse;
 
-public class HotSauce extends PartWithImage {
+public class HotSauce extends Part {
 
 	private static final long serialVersionUID = -6554089399884804705L;
 

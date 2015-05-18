@@ -1,62 +1,39 @@
 package es.upm.fi.emse;
 
-import java.awt.Color;
 import java.awt.Component;
-import java.util.Random;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class Part extends Component {
 
 	private static final long serialVersionUID = -2991314089476390298L;
 
-	private static final int numPartTypes = 4;
+	protected BufferedImage image;
+	private int padding = 10;
 
-	protected Color color; 
-	
-	protected int Size;
-
-	public Part() {
-		Size = 1;
+	public Part(String filename) {
+		try {
+			image = ImageIO.read(getClass().getResourceAsStream(filename));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	public static Part generatePart() {
-		Part p = null;		
-		int i = randInt(0, numPartTypes - 1);			
+	@Override
+	public void paint(Graphics g) {
+		int width  = getWidth() - padding * 2;
+		int height = getHeight() - padding  * 2;
 
-		switch (i) {
-	        case 0:  p = new Bread();
-	                 break;
-	        case 1:  p = new Sausage();
-	                 break;
-	        case 2:  p = new HotSauce();
-	                 break;
-	        case 3:  p = new Ketchup();
-            break;
-		}		
-		
-		return p;		
+		double scale = Math.min(1.0 * width / image.getWidth(), 1.0 * height / image.getHeight());
+
+		int newWidth  = (int) Math.round(scale * image.getWidth());
+		int newHeight = (int) Math.round(scale * image.getHeight());
+
+		g.drawImage(image, (getWidth() - newWidth) / 2, (getHeight() - newHeight) / 2, newWidth, newHeight, this);
 	}
-	
-	
-	/**
-	 * Returns a pseudo-random number between min and max, inclusive.
-	 * The difference between min and max can be at most
-	 * <code>Integer.MAX_VALUE - 1</code>.
-	 *
-	 * @param min Minimum value
-	 * @param max Maximum value.  Must be greater than min.
-	 * @return Integer between min and max, inclusive.
-	 * @see java.util.Random#nextInt(int)
-	 */
-	private static int randInt(int min, int max) {
 
-	    // NOTE: Usually this should be a field rather than a method
-	    // variable so that it is not re-seeded every call.
-	    Random rand = new Random();
-
-	    // nextInt is normally exclusive of the top value,
-	    // so add 1 to make it inclusive
-	    int randomNum = rand.nextInt((max - min) + 1) + min;
-
-	    return randomNum;
-	}
 }

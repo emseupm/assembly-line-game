@@ -13,7 +13,7 @@ public class Station extends Component {
 	
 	protected List<Task> tasks = new ArrayList<Task>();
 	
-	public void addTaskArray(List<Task> tasks){
+	public void setTasks(List<Task> tasks){
 		this.tasks = tasks;
 	}
 	
