@@ -8,8 +8,8 @@ import java.util.List;
 
 public class Game extends Frame {
 
-	private static final int DEFAULT_HEIGHT = 300;
-	private static final int DEFAULT_WIDTH = 300;
+	private static final int DEFAULT_HEIGHT = 600;
+	private static final int DEFAULT_WIDTH = 800;
 
 	private static final long serialVersionUID = -1070413246769754490L;
 

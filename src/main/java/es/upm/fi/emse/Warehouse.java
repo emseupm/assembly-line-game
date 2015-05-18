@@ -3,65 +3,61 @@ package es.upm.fi.emse;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Warehouse extends Component {
 
-	private static int WAREHOUSE_SIZE = 4;
 	private static final long serialVersionUID = -4985756162707607745L;
-	private ArrayList<Part>  myWarehouse;
+
+	private List<Part> parts = new ArrayList<Part>();
+
 	protected int padding = 25;
-	
-	public Warehouse(){		
-		this.myWarehouse = fillWarehouse();
-		//this.myWarehouse = fillWarehouseRandomly();
+
+	public Warehouse() {
+		setupParts();
 	}
 
-	// Paint the Warehouse box
-	public void paint(Graphics g) {
-		g.setColor(Color.BLUE);
+	private void setupParts(){
+		parts.add(new Bread());
+		parts.add(new Sausage());
+		parts.add(new Ketchup());
+		parts.add(new HotSauce());
 
-		int padding = 10;
-		g.drawRect(padding, padding, getWidth() - (padding * 2), getHeight() - (padding * 2));
-		g.drawString("WAREHOUSE", padding * 2, padding * 2);
-		
-		paintPartsInWarehouse(g);
-	}
-	
-	// Paint all Parts stored in my warehouse aligned horizontally
-	private void paintPartsInWarehouse(Graphics g){
-		
-		int i = 0;
-		int partWidth = (getWidth() - padding * 2) / WAREHOUSE_SIZE;
-		for (Part p : myWarehouse){		
-			p.setBounds(padding + i * (partWidth), padding, partWidth, getHeight() - padding * 2);
-			p.paint(g);
-			i++;
-		}	
+		layoutParts();
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				layoutParts();
+			}
+		});
 	}
 
-	// Fills warehouse with Random Parts
-	private ArrayList<Part> fillWarehouseRandomly(){
-		
-		ArrayList<Part> myW = new ArrayList<Part>();
-		
-		for (int i = 0; i<WAREHOUSE_SIZE;i++){
-			myW.add(Part.generateRandomTyePart());
+	private void layoutParts() {
+		int partWidth = (getWidth() - padding * 2) / parts.size();
+		for (int i = 0; i < parts.size(); i++) {
+			Part part = parts.get(i);
+			part.setBounds(padding + i * (partWidth), padding, partWidth, getHeight() - padding * 2);
 		}
-
-		return myW;
 	}
-	
-	// Fills Warehouse with selected Parts
-	private ArrayList<Part> fillWarehouse(){
-		
-		ArrayList<Part> myW = new ArrayList<Part>();
 
-		myW.add(new Lettuce());
-		myW.add(new Meatball());
-		myW.add(new Cookie());
-		myW.add(new Coffee());
-		
-		return myW;
+	public void paint(Graphics g) {
+		int padding = 10;
+
+		g.setColor(Color.decode("0x6cacdd"));
+		g.fillRect(padding, padding, getWidth() - (padding * 2), getHeight() - (padding * 2));
+		g.setColor(Color.decode("0x5a90ba"));
+		g.drawRect(padding, padding, getWidth() - (padding * 2), getHeight() - (padding * 2));
+		g.setColor(Color.WHITE);
+		g.drawString("WAREHOUSE", padding * 3, padding * 3);
+
+		for (Part part : parts) {
+			Rectangle bounds = part.getBounds();
+			part.paint(g.create(bounds.x, bounds.y, bounds.width, bounds.height));
+		}
 	}
+
 }

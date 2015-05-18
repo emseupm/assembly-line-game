@@ -1,12 +1,13 @@
 package es.upm.fi.emse;
 
-import java.awt.Component;
 import java.awt.Color;
-
+import java.awt.Component;
 import java.util.Random;
 
 public class Part extends Component {
-	
+
+	private static final long serialVersionUID = -2991314089476390298L;
+
 	private static final int numPartTypes = 4;
 
 	protected Color color; 
@@ -16,24 +17,19 @@ public class Part extends Component {
 	public Part() {
 		Size = 1;
 	}
-	
-	public void paint() {
-		
-	}
-	
-	public static Part generateRandomTyePart(){
-				
+
+	public static Part generatePart() {
 		Part p = null;		
-		int i = randInt(0,numPartTypes-1);			
-		
+		int i = randInt(0, numPartTypes - 1);			
+
 		switch (i) {
-	        case 0:  p = new Coffee();
+	        case 0:  p = new Bread();
 	                 break;
-	        case 1:  p = new Cookie();
+	        case 1:  p = new Sausage();
 	                 break;
-	        case 2:  p = new Meatball();
+	        case 2:  p = new HotSauce();
 	                 break;
-	        case 3:  p = new Lettuce();
+	        case 3:  p = new Ketchup();
             break;
 		}		
 		
