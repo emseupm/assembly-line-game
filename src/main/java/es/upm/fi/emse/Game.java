@@ -34,7 +34,7 @@ public class Game extends Frame {
 		add(score);
 		add(assemblyLine);
 		add(warehouse);
-
+		
 		layoutComponents();
 		addComponentListener(new ComponentAdapter() {
 			@Override
