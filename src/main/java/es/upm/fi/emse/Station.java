@@ -1,23 +1,49 @@
 package es.upm.fi.emse;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Polygon;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetDragEvent;
+import java.awt.dnd.DropTargetDropEvent;
+import java.awt.dnd.DropTargetEvent;
+import java.awt.dnd.DropTargetListener;
 import java.awt.geom.Rectangle2D;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Station extends Component {
+import javax.swing.JComponent;
+
+public class Station extends JComponent implements DropTargetListener {
 	private static final long serialVersionUID = 1L;
 	
 	protected List<Task> tasks = new ArrayList<Task>();
-	
-	public void setTasks(List<Task> tasks){
-		this.tasks = tasks;
+
+	protected List<StationListener> stationListeners = new ArrayList<StationListener>();
+
+	public Station() {
+		new DropTarget(this, this);
+	}
+
+	public synchronized void addStationListener(StationListener stationListener) {
+		stationListeners.add(stationListener);
+	}
+
+	public synchronized void notifyWorkCompleted() {
+		for (StationListener stationListener : stationListeners) {
+			stationListener.workCompleted(this);
+		}
 	}
 	
-	public void paint(Graphics g) {
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
 		g.setColor(Color.GREEN);
 
 		int padding = 10;
@@ -83,5 +109,56 @@ public class Station extends Component {
 
 		g.setColor(Color.decode("0x5a90ba"));
 		g.drawPolygon(topFace);
+	}
+
+	public void accept(Part part) {
+		if (!tasks.isEmpty()) {
+			Task task = tasks.get(0);
+
+			if (task != null) {
+				task.accept(part);
+			}
+		}
+	}
+
+	public void dragEnter(DropTargetDragEvent dtde) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void dragOver(DropTargetDragEvent dtde) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void dropActionChanged(DropTargetDragEvent dtde) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void dragExit(DropTargetEvent dte) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void drop(DropTargetDropEvent dtde) {
+		Transferable transferable = dtde.getTransferable();
+
+		Object droppedObject = null;
+
+		try {
+			droppedObject = transferable.getTransferData(transferable.getTransferDataFlavors()[0]);
+			System.out.println("Received part: " + droppedObject);
+		} catch (UnsupportedFlavorException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		if (droppedObject instanceof Part) {
+			accept((Part) droppedObject);
+		}
 	}
 }

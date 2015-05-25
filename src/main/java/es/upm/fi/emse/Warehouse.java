@@ -1,15 +1,15 @@
 package es.upm.fi.emse;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Warehouse extends Component {
+import javax.swing.JComponent;
+
+public class Warehouse extends JComponent {
 
 	private static final long serialVersionUID = -4985756162707607745L;
 
@@ -26,6 +26,10 @@ public class Warehouse extends Component {
 		parts.add(new Sausage());
 		parts.add(new Ketchup());
 		parts.add(new HotSauce());
+
+		for (Part part : parts) {
+			add(part);
+		}
 
 		layoutParts();
 		addComponentListener(new ComponentAdapter() {
@@ -44,7 +48,8 @@ public class Warehouse extends Component {
 		}
 	}
 
-	public void paint(Graphics g) {
+	@Override
+	public void paintComponent(Graphics g) {
 		int padding = 10;
 
 		g.setColor(Color.decode("0x6cacdd"));
@@ -53,11 +58,6 @@ public class Warehouse extends Component {
 		g.drawRect(padding, padding, getWidth() - (padding * 2), getHeight() - (padding * 2));
 		g.setColor(Color.WHITE);
 		g.drawString("WAREHOUSE", padding * 3, padding * 3);
-
-		for (Part part : parts) {
-			Rectangle bounds = part.getBounds();
-			part.paint(g.create(bounds.x, bounds.y, bounds.width, bounds.height));
-		}
 	}
 
 }

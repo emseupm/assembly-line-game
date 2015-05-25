@@ -16,9 +16,12 @@ public class Time extends Component {
 			public void run() {
 				while (currentTime > 0) {
 					currentTime--;
-					System.out.println("time" + currentTime);
-					getParent().invalidate();
-					getParent().repaint(getX(), getY(), getWidth(), getHeight());
+
+					if (getParent() != null) {
+						getParent().invalidate();
+						getParent().repaint(getX(), getY(), getWidth(), getHeight());
+					}
+
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
@@ -30,7 +33,6 @@ public class Time extends Component {
 	}
 
 	private String getTimeString(int time) {
-		System.out.println(String.format("%02d:%02d", time / 60, time % 60));
 		return String.format("%02d:%02d", time / 60, time % 60);
 	}
 

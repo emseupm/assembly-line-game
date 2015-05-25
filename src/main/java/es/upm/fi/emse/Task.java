@@ -15,4 +15,9 @@ public class Task {
 	public void draw() {
 		//TODO implement method
 	}
+
+	public boolean accept(Part part) {
+		// TODO perform validation
+		return this.part.equals(part);
+	}
 }
