@@ -1,23 +1,54 @@
 package es.upm.fi.emse;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Polygon;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Station extends Component {
+import javax.swing.JComponent;
+
+public class Station extends JComponent {
 	private static final long serialVersionUID = 1L;
 	
 	protected List<Task> tasks = new ArrayList<Task>();
-	
-	public void setTasks(List<Task> tasks){
-		this.tasks = tasks;
+
+	protected List<StationListener> stationListeners = new ArrayList<StationListener>();
+
+	public Station() {
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				notifyStationSelected();
+			}
+		});
+	}
+
+	public synchronized void addStationListener(StationListener stationListener) {
+		stationListeners.add(stationListener);
+	}
+
+	public synchronized void notifyWorkCompleted() {
+		for (StationListener stationListener : stationListeners) {
+			stationListener.workCompleted(this);
+		}
+	}
+
+	public synchronized void notifyStationSelected() {
+		for (StationListener stationListener : stationListeners) {
+			stationListener.stationSelected(this);
+		}
 	}
 	
-	public void paint(Graphics g) {
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
 		g.setColor(Color.GREEN);
 
 		int padding = 10;
@@ -83,5 +114,15 @@ public class Station extends Component {
 
 		g.setColor(Color.decode("0x5a90ba"));
 		g.drawPolygon(topFace);
+	}
+
+	public void accept(Part part) {
+		if (!tasks.isEmpty()) {
+			Task task = tasks.get(0);
+
+			if (task != null) {
+				task.accept(part);
+			}
+		}
 	}
 }
