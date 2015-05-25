@@ -10,5 +10,8 @@ public class RecipeLoader {
 	public void load(Recipe recipe) {
 		station.setTasks(recipe.getTasks());
 		station.setRecipe(recipe);
+
+		station.invalidate();
+		station.repaint();
 	}
 }

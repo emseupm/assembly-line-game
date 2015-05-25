@@ -9,7 +9,7 @@ import java.util.List;
 
 import javax.swing.JComponent;
 
-public class AssemblyLine extends JComponent implements StationListener {
+public class AssemblyLine extends JComponent implements StationListener, Observer {
 
 	private static final long serialVersionUID = -7209808105752155582L;
 
@@ -19,6 +19,8 @@ public class AssemblyLine extends JComponent implements StationListener {
 	protected int padding = 10;
 
 	private List<AssemblyLineListener> assemblyLineListeners = new ArrayList<AssemblyLineListener>();
+
+	private Observer taskObserver;
 
 	public AssemblyLine() {
 		setupStations();
@@ -78,7 +80,26 @@ public class AssemblyLine extends JComponent implements StationListener {
 
 	public void load(Recipe recipe) {
 		RecipeLoader firstRecipeLoader = recipeLoaders.get(0);
+		for (Task task : recipe.getTasks()) {
+			task.addObserver(this);
+		}
 		firstRecipeLoader.load(recipe);
+	}
+
+	public void taskCorrect() {
+		if (taskObserver != null) {
+			taskObserver.taskCorrect();
+		}
+	}
+
+	public void taskIncorrect() {
+		if (taskObserver != null) {
+			taskObserver.taskIncorrect();
+		}
+	}
+
+	public void setTaskObserver(Observer taskObserver) {
+		this.taskObserver = taskObserver;
 	}
 
 }

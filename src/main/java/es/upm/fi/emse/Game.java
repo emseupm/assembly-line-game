@@ -35,6 +35,8 @@ public class Game extends JFrame implements AssemblyLineListener {
 		add(score);
 		add(assemblyLine);
 		add(warehouse);
+
+		assemblyLine.setTaskObserver(score);
 		
 		layoutComponents();
 		addComponentListener(new ComponentAdapter() {

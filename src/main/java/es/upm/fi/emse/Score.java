@@ -85,12 +85,16 @@ public class Score extends Container implements Observer {
 	public void taskCorrect() {
 		System.out.println("A part has been put in the right place");
 		currentScore += 150;
+		invalidate();
+		repaint();
 		setImage("correct.png");		
 	}
 
 	public void taskIncorrect(){
 		System.out.println("A part has been put in the wrong place");
 		currentScore -= 100;
+		invalidate();
+		repaint();
 		setImage("wrong.jpg");
 	}
 

@@ -190,10 +190,11 @@ public class Station extends JComponent implements DropTargetListener {
 				recipe = (Recipe) droppedObject;
 				setTasks(recipe.getTasks());
 				add(recipe);
-				invalidate();
-				repaint();
-				previousStation.invalidate();
-				previousStation.repaint();
+
+				previousStation.notifyWorkCompleted();
+
+				getParent().invalidate();
+				getParent().repaint();
 			}
 		}
 	}
