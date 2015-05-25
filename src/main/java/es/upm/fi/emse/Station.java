@@ -182,6 +182,19 @@ public class Station extends JComponent implements DropTargetListener {
 
 		if (droppedObject instanceof Part) {
 			accept((Part) droppedObject);
+		} else if (droppedObject instanceof Recipe) {
+			Station previousStation = (Station) ((Recipe) droppedObject).getParent();
+
+			if (previousStation != null) {
+				previousStation.remove((Recipe) droppedObject);
+				recipe = (Recipe) droppedObject;
+				setTasks(recipe.getTasks());
+				add(recipe);
+				invalidate();
+				repaint();
+				previousStation.invalidate();
+				previousStation.repaint();
+			}
 		}
 	}
 

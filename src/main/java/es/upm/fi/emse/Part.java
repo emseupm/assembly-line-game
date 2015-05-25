@@ -21,10 +21,6 @@ public class Part extends JComponent implements Transferable {
 	protected BufferedImage image;
 	private int padding = 10;
 
-	protected boolean dragging;
-
-	private DataFlavor localPartDataFlavor;
-
 	public Part(String filename) {
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream(filename));
@@ -68,14 +64,9 @@ public class Part extends JComponent implements Transferable {
 					handler.exportAsDrag(comp, e, TransferHandler.COPY);
 				}
 			});
-
-			localPartDataFlavor = new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType + ";class=\"" +  Part.class.getName() + "\"");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 	}
 
@@ -96,12 +87,29 @@ public class Part extends JComponent implements Transferable {
 		return this;
 	}
 
+	protected DataFlavor getDataFlavor() {
+		DataFlavor flavor = null;
+
+		try {
+			flavor = new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return flavor;
+	}
+
 	public DataFlavor[] getTransferDataFlavors() {
-		return new DataFlavor[] { localPartDataFlavor };
+		return new DataFlavor[] { getDataFlavor() };
 	}
 
 	public boolean isDataFlavorSupported(DataFlavor flavor) {
-		return flavor.equals(localPartDataFlavor);
+		return flavor.equals(getDataFlavor());
+	}
+
+	public BufferedImage getImage() {
+		return image;
 	}
 
 }

@@ -1,6 +1,7 @@
 package es.upm.fi.emse;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
 
@@ -42,6 +43,10 @@ public class Task extends JComponent {
 				nextTask.paint(g);
 			}
 		}
+	}
+
+	public BufferedImage getImage() {
+		return part.getImage();
 	}
 
 }
