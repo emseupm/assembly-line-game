@@ -1,23 +1,47 @@
 package es.upm.fi.emse;
 
-public class Task {
-	
-	private Part part;
-	
-	public void setPart(Part part) {
-		this.part = part;
-	}
-	
-	public Part getPart() {
-		return part;
-	}
+import java.awt.Graphics;
 
-	public void draw() {
-		//TODO implement method
+import javax.swing.JComponent;
+
+public class Task extends JComponent {
+
+	private static final long serialVersionUID = 5222742123553851242L;
+
+	private Part part;
+
+	private boolean completed;
+
+	private Task nextTask;
+	
+	public Task(Part part, Task nextTask) {
+		this.part = part;
+		this.nextTask = nextTask;
 	}
 
 	public boolean accept(Part part) {
-		// TODO perform validation
-		return this.part.equals(part);
+		if (completed && nextTask != null) {
+			return nextTask.accept(part);
+		} else {
+			if (this.part.getClass().equals(part.getClass())) {
+				completed = true;
+				return true;
+			} else {
+				return false;
+			}
+		}
 	}
+
+	public void paint(Graphics g) {
+		if (completed) {
+			part.setSize(getSize());
+			part.paintComponent(g);
+	
+			if (nextTask != null) {
+				nextTask.setSize(getSize());
+				nextTask.paint(g);
+			}
+		}
+	}
+
 }

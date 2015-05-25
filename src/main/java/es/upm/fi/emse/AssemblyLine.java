@@ -13,15 +13,14 @@ public class AssemblyLine extends JComponent implements StationListener {
 
 	private static final long serialVersionUID = -7209808105752155582L;
 
-	protected List<Station> stations;
-	protected List<RecipeLoader> recipeLoaders;
+	protected List<Station> stations = new ArrayList<Station>();
+	protected List<RecipeLoader> recipeLoaders = new ArrayList<RecipeLoader>();
 	protected int totalStations = 3;
 	protected int padding = 10;
 
 	private List<AssemblyLineListener> assemblyLineListeners = new ArrayList<AssemblyLineListener>();
 
 	public AssemblyLine() {
-		stations = new ArrayList<Station>();
 		setupStations();
 	}
 
@@ -30,6 +29,9 @@ public class AssemblyLine extends JComponent implements StationListener {
 			Station station = new Station();
 			stations.add(station);
 			add(station);
+
+			RecipeLoader recipeLoader = new RecipeLoader(station);
+			recipeLoaders.add(recipeLoader);
 
 			station.addStationListener(this);
 		}

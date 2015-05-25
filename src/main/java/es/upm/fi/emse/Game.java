@@ -58,6 +58,7 @@ public class Game extends JFrame implements AssemblyLineListener {
 
 	public void start() {
 		setVisible(true);
+		assemblyLine.load(new HotDogRecipe());
 	}
 
 	public void firstStationFreed(AssemblyLine assemblyLine) {

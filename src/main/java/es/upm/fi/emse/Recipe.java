@@ -1,8 +1,14 @@
 package es.upm.fi.emse;
 
+import java.awt.Graphics;
 import java.util.List;
 
-public class Recipe {
+import javax.swing.JComponent;
+
+public class Recipe extends JComponent {
+
+	private static final long serialVersionUID = -5072709853087281668L;
+
 	protected Product product;
 	protected List<Task> tasks;
 
@@ -13,5 +19,15 @@ public class Recipe {
 
 	public List<Task> getTasks() {
 		return tasks;
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
+		Task task = tasks.get(0);
+
+		if (task != null) {
+			task.setSize(getSize());
+			task.paint(g);
+		}
 	}
 }

@@ -24,6 +24,8 @@ public class Station extends JComponent implements DropTargetListener {
 
 	protected List<StationListener> stationListeners = new ArrayList<StationListener>();
 
+	private Recipe recipe;
+
 	public Station() {
 		new DropTarget(this, this);
 	}
@@ -57,6 +59,25 @@ public class Station extends JComponent implements DropTargetListener {
 		paintFrontFace(content, rectWidth, rectHeight);
 		paintTopFace(content, rectWidth, rectHeight);
 		paintRightFace(content, rectWidth, rectHeight);
+	}
+
+	@Override
+	public void doLayout() {
+		super.doLayout();
+
+		int padding = 10;
+		int width = getWidth() - padding * 2;
+		int height = getHeight() - padding * 2;
+
+		int rectWidth  = width * 3 / 4;
+		int rectHeight = height / 2;
+
+		int recipeWidth  = (int) (rectWidth * 0.8);
+		int recipeHeight = (int) ((getHeight() - rectHeight) * 0.8);
+
+		if (recipe != null) {
+			recipe.setBounds((getWidth() - recipeWidth) / 2, (getHeight() - rectHeight - recipeHeight) / 2, recipeWidth, recipeHeight);
+		}
 	}
 
 	private void paintFrontFace(Graphics g, int rectWidth, int rectHeight) {
@@ -117,6 +138,8 @@ public class Station extends JComponent implements DropTargetListener {
 
 			if (task != null) {
 				task.accept(part);
+				invalidate();
+				repaint();
 			}
 		}
 	}
@@ -161,4 +184,14 @@ public class Station extends JComponent implements DropTargetListener {
 			accept((Part) droppedObject);
 		}
 	}
+
+	public void setRecipe(Recipe recipe) {
+		if (this.recipe != null) {
+			remove(this.recipe);
+		}
+
+		this.recipe = recipe;
+		add(recipe);
+	}
+
 }
